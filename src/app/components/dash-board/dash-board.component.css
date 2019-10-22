@@ -1,0 +1,47 @@
+.mandatory {
+	color: red;
+	display: inline-block;
+}
+
+.errorMessage {
+	color: red;
+	display: inline-block;
+	font-family: Segoe UI;
+	font-size: 11px;
+}
+
+.ui-dialog .ui-dialog-content input[type="password"] {
+	border: 1px solid #C8D0DE;
+	margin: 4px 0px;
+	width: 141px;
+	padding: 4px;
+	font: 12px "Segoe UI";
+	border-radius: 4px;
+	position: relative !important;
+	color: #758EAB;
+	vertical-align: middle;
+}
+
+.actionErrorMessages {
+	font-family: "Segoe UI";
+	color: #F00;
+	font-size: 11px;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.actionSuccessMessages {
+	font-family: "Segoe UI";
+	color: green;
+	font-size: 11px;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.menuSelect{
+    margin-top: 1px !important;
+}
+
+#menu{
+    margin-top: -1px !important;
+}

@@ -9,10 +9,12 @@
 	font-family: Segoe UI;
 	font-size: 11px;
 }
-
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
 .ui-dialog .ui-dialog-content input[type="password"] {
 	border: 1px solid #C8D0DE;
-	margin: 4px 0px;
+	/* margin: 4px 0px; */
 	width: 141px;
 	padding: 4px;
 	font: 12px "Segoe UI";

@@ -1,0 +1,64 @@
+<mat-toolbar>
+  <!-- <span>{{service.form.controls['$key'].value?"Modify Employee":"New Employee"}}</span> -->
+  <span class="fill-remaining-space"></span>
+  <button
+    class="btn-dialog-close"
+    mat-stroked-button
+    (click)="onClose()"
+    tabIndex="-1"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="service.form" class="normal-form">
+  <mat-grid-list cols="2" rowHeight="500px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input
+            formControlName="description"
+            matInput
+            placeholder="Description"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="libraryType" placeholder="LibraryType">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let libraryType of service.librarytype">
+              <mat-option value="{{ libraryType.id }}">{{
+                libraryType.value
+              }}</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input
+            formControlName="libraryCode"
+            matInput
+            placeholder="LibraryCode"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            formControlName="libraryName"
+            matInput
+            placeholder="LibraryName"
+          />
+        </mat-form-field>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit">
+            Submit
+          </button>
+          <button mat-raised-button color="warn" (click)="onClear()">
+            Clear
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

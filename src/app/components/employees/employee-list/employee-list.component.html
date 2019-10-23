@@ -1,0 +1,172 @@
+<nav-bar></nav-bar>
+<br />
+
+<div class="container">
+  <form [formGroup]="service.form" class="normal-form">
+    <mat-grid-list cols="2" rowHeight="500px">
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <input
+              formControlName="libraryCode"
+              matInput
+              placeholder="Library Code"
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              formControlName="libraryName"
+              matInput
+              placeholder="Library Name"
+            />
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <div class="controles-container">
+          <div class="add-bottom-padding">
+            <mat-form-field>
+              <mat-select
+                formControlName="libraryType"
+                placeholder="Library Type"
+              >
+                <mat-option>None</mat-option>
+                <label for="textarea2">Textarea</label>
+                <ng-container *ngFor="let librarytype of service.librarytype">
+                  <mat-option value="{{ librarytype.id }}">{{
+                    librarytype.value
+                  }}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select formControlName="status" placeholder="Status">
+                <mat-option>None</mat-option>
+                <ng-container *ngFor="let status of service.status">
+                  <mat-option value="{{ status.id }}">{{
+                    status.value
+                  }}</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="button-row">
+            <!-- <button mat-raised-button color="primary" (click)="onCreate()">
+              Add
+            </button> -->
+
+            <button mat-raised-button color="primary" (click)="onCreate()">
+              Add
+            </button>
+
+            <button mat-raised-button color="primary" (click)="getEmp()">
+              Search
+            </button>
+            <button mat-raised-button color="warn" (click)="onClear()">
+              Clear
+            </button>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
+
+<!-- *ngIf="displayResult" -->
+<div
+  class="input-field col s3 offset-s3"
+  [ngClass]="displayResult !== undefined ? 'visible' : 'hidden'"
+>
+  <!-- <button style="position: absolute; left: 110px;" mat-raised-button>
+    <mat-icon>add</mat-icon>Create
+  </button> -->
+  <!-- <mat-form-field style="position: absolute; left: 110px;"> 
+    <input
+      [(ngModel)]="searchKey"
+      matInput
+      placeholder="Search"
+      autocomplete="off"
+    />
+    <button
+      mat-button
+      mat-icon-button
+      matSuffix
+      (click)="clearSearchField()"
+      *ngIf="searchKey"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field> -->
+
+  <table mat-table [dataSource]="listData" class="mat-elevation-z8" matSort>
+    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="libraryCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>LibraryCode</th>
+      <td mat-cell *matCellDef="let element">{{ element.libraryCode }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="libraryName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>LibraryName</th>
+      <td mat-cell *matCellDef="let element">{{ element.libraryName }}</td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="onEdit(row)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button (click)="onEdit(row)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(row)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- <mat-footer-row
+      *matFooterRowDef="['loading']"
+      [ngClass]="{ hide: listData != null }"
+    ></mat-footer-row> -->
+    <mat-footer-row
+      *matFooterRowDef="['noData']"
+      [ngClass]="{ hide: !(listData != null && listData.data.length == 0) }"
+    ></mat-footer-row>
+  </table>
+</div>
+
+<div class="input-field col s6 offset-s6">
+  <mat-paginator
+    [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  >
+  </mat-paginator>
+</div>

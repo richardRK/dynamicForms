@@ -1,0 +1,23 @@
+/* Structure */
+table {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 90%;
+  margin: 0 auto;
+}
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+/* .mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+} */

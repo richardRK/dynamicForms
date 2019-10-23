@@ -23,6 +23,10 @@
     "@angular/router": "~8.2.11",
     "@material/checkbox": "^3.2.0",
     "@material/data-table": "^3.2.0",
+    "angular2-materialize": "^15.1.10",
+    "hammerjs": "^2.0.8",
+    "jquery": "^2.2.4",
+    "materialize-css": "^1.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

@@ -1,1 +1,158 @@
-<p>edit-page works!</p>
+<div id="right_onecolumnCust" class="marginBottom">
+  <div class="customersetup legalEntity">
+    <div class="clearDiv"></div>
+    <form [formGroup]="service.form" class="normal-form" (submit)="onSubmit()">
+      <div class="prompttable" id="prompt">
+        <h3 class="noTopmargin">
+          Add Reference Heading
+        </h3>
+        <div class="booking_content nomargin">
+          <table style="width: 100%">
+            <tbody>
+              <tr>
+                <td>
+                  <mat-form-field>
+                    <input
+                      formControlName="description"
+                      matInput
+                      placeholder="Description"
+                    />
+                  </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field>
+                    <input
+                      formControlName="libraryCode"
+                      matInput
+                      placeholder="LibraryCode"
+                    />
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr></tr>
+            </tbody>
+          </table>
+          <div>
+            <h3>Back Office Entries</h3>
+            <div id="moreGDSRemarks" style="width: 100%">
+              <div id="rowCount0">
+                <table style="width: 100%">
+                  <tbody>
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="rowCount1">
+                <table style="width: 100%">
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+            <div></div>
+          </div>
+
+          <div
+            formArrayName="other"
+            *ngFor="
+              let other of service.form.get('other').controls;
+              let i = index
+            "
+            class="form-group"
+          >
+            <div [formGroupName]="i">
+              <div id="moreGDSRemarks" style="width: 100%">
+                <div id="rowCount0">
+                  <table style="width: 100%">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <mat-form-field>
+                            <mat-select
+                              formControlName="libraryType"
+                              placeholder="Library Type"
+                            >
+                              <mat-option>None</mat-option>
+                              <label for="textarea2">Textarea</label>
+                              <ng-container
+                                *ngFor="let librarytype of service.librarytype"
+                              >
+                                <mat-option value="{{ librarytype.id }}"
+                                  >{{ librarytype.value }}
+                                </mat-option>
+                              </ng-container>
+                            </mat-select>
+                          </mat-form-field>
+                        </td>
+
+                        <td>
+                          <mat-form-field>
+                            <input
+                              formControlName="libraryName"
+                              matInput
+                              placeholder="Library Name"
+                            />
+                          </mat-form-field>
+                        </td>
+                        <td>
+                          <button
+                            mat-icon-button
+                            color="warn"
+                            type="button"
+                            (click)="onDelete(i)"
+                          >
+                            <mat-icon>delete_outline</mat-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="rowCount1">
+                  <table style="width: 100%">
+                    <tbody></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="button-row">
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="addButtonClick()"
+            >
+              Add Another GDS
+            </button>
+            <button mat-raised-button color="primary" type="submit">
+              Submit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="onClear()"
+            >
+              Clear
+            </button>
+            <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+            <div class="btnwrap marginRight"></div>
+            <br />
+          </div>
+        </div>
+        <div class="btnwrap marginRight"></div>
+      </div>
+    </form>
+  </div>
+</div>

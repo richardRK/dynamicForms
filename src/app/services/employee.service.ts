@@ -1,5 +1,11 @@
 import { Injectable } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormArray
+} from "@angular/forms";
 import { Observable } from "rxjs/internal/Observable";
 import { of } from "rxjs";
 import * as _ from "lodash";
@@ -8,7 +14,7 @@ import * as _ from "lodash";
   providedIn: "root"
 })
 export class EmployeeService {
-  constructor() {}
+  constructor(private formBuilder: FormBuilder) {}
 
   empList: any;
 
@@ -40,9 +46,17 @@ export class EmployeeService {
     libraryName: new FormControl(""),
     libraryType: new FormControl(""),
     status: new FormControl(""),
-    description: new FormControl("")
-   
+    description: new FormControl(""),
+    other: this.formBuilder.array([this.addOtherSkillFormGroup()])
   });
+
+  addOtherSkillFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      libraryType: new FormControl(""),
+      libraryName: new FormControl(""),
+      status: new FormControl("")
+    });
+  }
 
   getData(): Observable<any> {
     this.empList = [
@@ -85,19 +99,29 @@ export class EmployeeService {
       libraryName: data.libraryName,
       libraryType: "",
       status: "",
-      description: ""
+      description: "",
+      other: [{ libraryType: "", libraryName: data.libraryName, status: "" }]
     });
   }
 
+  clearFormArray() {
+    const formArr = <FormArray>this.form.controls["other"];
+    const len = formArr.length;
+    if (len > 0) {
+      for (let i = len - 1; i >= 1; i--) {
+        formArr.removeAt(i);
+      }
+    }
+  }
 
-  
   initializeFormGroup() {
     this.form.setValue({
       libraryCode: "",
       libraryName: "",
       libraryType: "",
       status: "",
-      description: ""
+      description: "",
+      other: [{ libraryType: "", libraryName: "", status: "" }]
     });
   }
 }

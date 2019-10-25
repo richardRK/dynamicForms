@@ -11,6 +11,7 @@ import {
 import { MatSort } from "@angular/material/sort";
 import { Form1Component } from "../form1/form1.component";
 import { NotificationService } from "src/app/services/notification.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-employee-list",
@@ -29,10 +30,14 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   constructor(
     private service: EmployeeService,
     private dialog: MatDialog,
-    private nSrvc: NotificationService
+    private nSrvc: NotificationService,
+    private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.service.form.reset();
+    this.service.clearFormArray();
+  }
 
   ngAfterViewInit() {}
 
@@ -51,12 +56,14 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
 
   //change 2
   onCreate() {
+    this.service.clearFormArray();
     this.service.initializeFormGroup();
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    this.dialog.open(Form1Component, dialogConfig);
+    this.router.navigate(['/create-page']);
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+    // dialogConfig.width = "60%";
+    // this.dialog.open(Form1Component, dialogConfig);
   }
 
   onClear() {
@@ -65,15 +72,19 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     // this.nSrvc.success(":: Submitted successfully");
   }
 
-
+  onCancel(){
+    this.router.navigate(['/emp-list']);
+  }
   //change 1
   onEdit(row) {
     this.service.populateForm(row);
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    this.dialog.open(Form1Component, dialogConfig);
+    this.router.navigate(['/edit-page']);
+
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+    // dialogConfig.width = "60%";
+    // this.dialog.open(Form1Component, dialogConfig);
   }
 
   onDelete($key) {

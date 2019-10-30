@@ -23,6 +23,13 @@ import { Form2Component } from "./components/employees/form2/form2.component";
 import { MatDialogRef } from "@angular/material";
 import { CreatePageComponent } from './components/create-page/create-page.component';
 import { EditPageComponent } from './components/edit-page/edit-page.component';
+import { Edit1PageComponent } from './components/employees/employee-list/edit1-page/edit1-page.component';
+import { RouterModule } from '@angular/router';
+import { Edit2PageComponent } from './components/employees/employee-list/edit2-page/edit2-page.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -39,7 +46,9 @@ import { EditPageComponent } from './components/edit-page/edit-page.component';
     Form1Component,
     Form2Component,
     CreatePageComponent,
-    EditPageComponent
+    EditPageComponent,
+    Edit1PageComponent,
+    Edit2PageComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,13 +56,17 @@ import { EditPageComponent } from './components/edit-page/edit-page.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule
+    // RouterModule.forRoot([])
   ],
   bootstrap: [AppComponent],
   providers: [
     { provide: APP_BASE_HREF, useValue: "/" },
     EmployeeService,
-    { provide: MatDialogRef, useValue: {} }
+    { provide: MatDialogRef, useValue: {} },
+    AngularFirestore
   ],
   entryComponents: [Form1Component]
 })

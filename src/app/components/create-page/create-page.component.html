@@ -13,8 +13,8 @@
                 <td>
                   <mat-form-field>
                     <input
-                      [(ngModel)]="description"
                       formControlName="description"
+                      [(ngModel)]="description"
                       matInput
                       placeholder="Description"
                     />
@@ -24,8 +24,8 @@
                 <td>
                   <mat-form-field>
                     <input
-                      [(ngModel)]="libraryCode"
                       formControlName="libraryCode"
+                      [(ngModel)]="libraryCode"
                       matInput
                       placeholder="LibraryCode"
                     />
@@ -73,7 +73,6 @@
                         <td>
                           <mat-form-field>
                             <mat-select
-                              [(ngModel)]="libraryType"
                               formControlName="libraryType"
                               placeholder="Library Type"
                             >
@@ -82,7 +81,7 @@
                               <ng-container
                                 *ngFor="let librarytype of service.librarytype"
                               >
-                                <mat-option value="{{ librarytype.id }}"
+                                <mat-option value="{{ librarytype.value }}"
                                   >{{ librarytype.value }}
                                 </mat-option>
                               </ng-container>
@@ -93,7 +92,6 @@
                         <td>
                           <mat-form-field>
                             <input
-                              [(ngModel)]="libraryName"
                               formControlName="libraryName"
                               matInput
                               placeholder="Library Name"
@@ -131,7 +129,7 @@
             >
               Add Another GDS
             </button>
-            <button mat-raised-button color="primary" type="submit">
+            <button mat-raised-button color="primary" type="button" (click)="onSubmit()">
               Submit
             </button>
             <button

@@ -1,18 +1,27 @@
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  OnDestroy,
+  SimpleChanges,
+  AfterViewChecked,
+  OnChanges
+} from "@angular/core";
 import { EmployeeService } from "src/app/services/employee.service";
 import { MatDialogRef, MatTableDataSource } from "@angular/material";
-import { Form1Component } from "../employees/form1/form1.component";
 import { FormArray } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TestLead, EditProd } from "src/app/shared/testlead.model";
+import { Form1Component } from "../../form1/form1.component";
 
 @Component({
-  selector: "app-edit-page",
-  templateUrl: "./edit-page.component.html",
-  styleUrls: ["./edit-page.component.css"]
+  selector: "app-edit1-page",
+  templateUrl: "./edit1-page.component.html",
+  styleUrls: ["./edit1-page.component.css"]
 })
-export class EditPageComponent implements OnInit, OnDestroy {
+export class Edit1PageComponent
+  implements OnInit, OnDestroy, AfterViewChecked, OnChanges {
   @Input() data: any;
   @Input() count: number;
   description: any;
@@ -20,7 +29,7 @@ export class EditPageComponent implements OnInit, OnDestroy {
   libraryType: any;
   libraryName: any;
   // index: any;
-  @Input() editArray: EditProd[];
+  // @Input() editArray: EditProd;
 
   // products: IProduct[] = [];
   subscription: any;
@@ -31,30 +40,19 @@ export class EditPageComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<Form1Component>,
     private router: Router
   ) {
-
-
-
-    var resp = this.editArray;
-
     //this.service.clearFormArray();
     // var form1 = <any>this.service.form.get("other");
-
     // var tst11 = this.libraryCode;
-
     // if (tst11 != undefined) {
     //   var tt22 = tst11.split(",");
-
     //   for (var j = 0; j < tt22.length; j++) {
     //     var r233 = tt22[j].split("-");
-
     //     if (r233[0] != null && r233[1] != null) {
     //       this.t12.push(r233[0]);
     //       this.t13.push(r233[1]);
     //     }
     //   }
-
     //   var res222 = this.service.addOtherSkillFormGroup666(this.t12, this.t13);
-
     //   for (var k = 0; k < res222.length; k++) {
     //     form1.push(res222[k]);
     //   }
@@ -63,8 +61,14 @@ export class EditPageComponent implements OnInit, OnDestroy {
 
   t12: any = [];
   t13: any = [];
-  ngOnInit() {
-   
+
+  ngOnChanges(changes: SimpleChanges) {
+  
+  }
+
+  ngAfterViewChecked() {
+  }
+  ngOnInit(): void {
   }
 
   ngOnDestroy() {

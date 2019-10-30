@@ -79,7 +79,7 @@
                               <ng-container
                                 *ngFor="let librarytype of service.librarytype"
                               >
-                                <mat-option value="{{ librarytype.id }}"
+                                <mat-option value="{{ librarytype.value }}"
                                   >{{ librarytype.value }}
                                 </mat-option>
                               </ng-container>
@@ -128,7 +128,12 @@
             >
               Add Another GDS
             </button>
-            <button mat-raised-button color="primary" type="submit">
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onSubmit()"
+            >
               Submit
             </button>
             <button
@@ -140,13 +145,13 @@
               Clear
             </button>
             <button
-            mat-raised-button
-            color="warn"
-            type="button"
-            (click)="onCancel()"
-          >
-            Cancel
-          </button>
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="onCancel()"
+            >
+              Cancel
+            </button>
             <div class="btnwrap marginRight"></div>
             <br />
           </div>

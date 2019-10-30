@@ -7,7 +7,7 @@
             <mat-option>None</mat-option>
             <label for="textarea2">Textarea</label>
             <ng-container *ngFor="let librarytype of service.librarytype">
-              <mat-option value="{{ librarytype.id }}">{{
+              <mat-option value="{{ librarytype.value }}">{{
                 librarytype.value
               }}</mat-option>
             </ng-container>
@@ -17,7 +17,7 @@
           <mat-select formControlName="status" placeholder="Status">
             <mat-option>None</mat-option>
             <ng-container *ngFor="let status of service.status">
-              <mat-option value="{{ status.id }}">{{
+              <mat-option value="{{ status.value }}">{{
                 status.value
               }}</mat-option>
             </ng-container>

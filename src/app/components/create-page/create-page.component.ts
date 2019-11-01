@@ -94,12 +94,22 @@ export class CreatePageComponent implements OnInit {
       // let resp = this.service.form.value as FormGroup;
       let data = Object.assign({}, this.service.form.value);
       //delete data.id;
-      if (this.service.form.value.id == null)
-        this.firestore.collection("employees").add(data);
-      else
-        this.firestore
-          .doc("employees/" + this.service.form.value.value.id)
-          .update(data);
+
+      if (this.service.form.touched == true) {
+        if (this.service.form.value.id == null)
+          this.firestore.collection("employees").add(data);
+        else
+          this.firestore
+            .doc("employees/" + this.service.form.value.value.id)
+            .update(data);
+
+        this.service.form.reset();
+        this.service.clearFormArray();
+        this.service.initializeFormGroup();
+        // this.notificationService.success(":: Submitted successfully");
+        this.onClose();
+      }
+
       // this.service.sendMessage(
       //   // this._id,
       //   this.description,
@@ -110,11 +120,6 @@ export class CreatePageComponent implements OnInit {
       // if (!this.service.form.get("$key").value)
       //   this.service.insertEmployee(this.service.form.value);
       // else this.service.updateEmployee(this.service.form.value);
-      this.service.form.reset();
-      this.service.clearFormArray();
-      this.service.initializeFormGroup();
-      // this.notificationService.success(":: Submitted successfully");
-      this.onClose();
     }
   }
 

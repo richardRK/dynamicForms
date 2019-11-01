@@ -4,7 +4,8 @@ import {
   FormGroup,
   Validators,
   FormBuilder,
-  FormArray
+  FormArray,
+  ValidatorFn
 } from "@angular/forms";
 import { Observable } from "rxjs/internal/Observable";
 import { of, Subject, BehaviorSubject } from "rxjs";
@@ -32,6 +33,8 @@ export class EmployeeService {
 
   employeeList: any;
 
+  form555: any;
+
   departments = [
     { id: 1, value: "Dep 1" },
     { id: 2, value: "Dep 2" },
@@ -45,25 +48,38 @@ export class EmployeeService {
   ];
 
   librarytype = [
-    { id: 1, value: "Category" },
-    { id: 2, value: "Address Type" },
-    { id: 3, value: "AGM" },
-    { id: 4, value: "Air" },
-    { id: 5, value: "Aviation" },
-    { id: 6, value: "BackOffice" },
-    { id: 7, value: "Package" },
-    { id: 8, value: "VisaType" }
+    { id: 1, value: "Aviation-fasd" },
+    { id: 2, value: "Address Type-fasd" },
+    { id: 3, value: "Air-fasd" },
+    { id: 4, value: "AGM-fasd" },
+    { id: 5, value: "Package-japan" },
+    { id: 6, value: "Package-fdsafa" },
+    { id: 7, value: "Aviation-AVLib" },
+    { id: 8, value: "Category-fasd" }
   ];
 
+  formControlFields: any;
+
   form: FormGroup = new FormGroup({
-    libraryCode: new FormControl(null, []),
-    libraryName: new FormControl(null, []),
-    libraryType: new FormControl(null, []),
-    status: new FormControl(null, []),
-    description: new FormControl(null, []),
+    libraryCode: new FormControl([]),
+    libraryName: new FormControl([]),
+    libraryType: new FormControl([]),
+    status: new FormControl([]),
+    description: new FormControl([]),
     other: this.formBuilder.array([this.addOtherSkillFormGroup()])
   });
 
+  // form33: FormGroup = this._formBuilder.group({
+  //   demoArray: this._formBuilder.array([])
+  // });
+  form22: FormGroup = new FormGroup({
+    // libraryCode: new FormControl(null, []),
+    // libraryName: new FormControl(null, []),
+    // libraryType: new FormControl(null, []),
+    // status: new FormControl(null, []),
+    // description: new FormControl(null, []),
+    other: this.formBuilder.array([this.addOtherSkillFormGroup()])
+  });
   subject = new BehaviorSubject<any>([]);
   userData = this.subject.asObservable();
   subject1 = new BehaviorSubject<any>([]);
@@ -73,7 +89,39 @@ export class EmployeeService {
     private formBuilder: FormBuilder,
     private firestore: AngularFirestore,
     private firebase: AngularFireDatabase
-  ) {}
+  ) {
+    const formControlFields = [
+      { name: "libraryCode", control: new FormControl(null, []) },
+      { name: "libraryName", control: new FormControl(null, []) },
+      { name: "libraryType", control: new FormControl(null, []) },
+      { name: "status", control: new FormControl(null, []) },
+      { name: "description", control: new FormControl(null, []) },
+      {
+        name: "other",
+        control: this.formBuilder.array([this.addOtherSkillFormGroup()])
+      }
+    ];
+    const formGroup: FormGroup = new FormGroup({});
+    formControlFields.forEach(f => formGroup.addControl(f.name, f.control));
+    this.form555 = new FormGroup({ groups: formGroup });
+  }
+
+  ngOnInit() {
+    const formControlFields = [
+      { name: "libraryCode", control: new FormControl(null, []) },
+      { name: "libraryName", control: new FormControl(null, []) },
+      { name: "libraryType", control: new FormControl(null, []) },
+      { name: "status", control: new FormControl(null, []) },
+      { name: "description", control: new FormControl(null, []) },
+      {
+        name: "other",
+        control: this.formBuilder.array([this.addOtherSkillFormGroup()])
+      }
+    ];
+    const formGroup: FormGroup = new FormGroup({});
+    formControlFields.forEach(f => formGroup.addControl(f.name, f.control));
+    this.form555 = new FormGroup({ groups: formGroup });
+  }
 
   updateUserData(data) {
     this.subject1.next(data);
@@ -81,7 +129,7 @@ export class EmployeeService {
 
   sendMessage1(row) {
     // this.row1 = row;
-    this.subject1.next({ text: row });
+    this.subject1.next({ other: row });
   }
 
   sendMessage(description, libraryCode, libraryType, libraryName) {
@@ -108,8 +156,8 @@ export class EmployeeService {
     return this.employeeList.snapshotChanges();
   }
 
-  getMessage(): Observable<any> {
-    return this.subject.asObservable();
+  getEditMsgs(): Observable<any> {
+    return this.subject1.asObservable();
   }
 
   public setContextData(message) {
@@ -141,28 +189,40 @@ export class EmployeeService {
   addOtherSkillFormGroup(): any {
     //this.clearFormData();
     var res = this.formBuilder.group({
-      libraryType: new FormControl(null, []),
-      libraryName: new FormControl(null, []),
-      status: new FormControl(null, [])
+      libraryType: new FormControl([], this.minSelectedCheckboxes()),
+      libraryName: new FormControl([], this.minSelectedCheckboxes()),
+      status: new FormControl([], this.minSelectedCheckboxes())
     });
     return res;
   }
 
-  addOtherSkillFormGroup666(t12, t13): any {
-    //this.clearFormData();
+  minSelectedCheckboxes(): ValidatorFn {
+    const validator: ValidatorFn = (formArray: any) => {
+      if (formArray.controls != undefined) {
+        const selectedCount = formArray.controls
+          .map(control => control.value)
+          .reduce((prev, next) => (next ? prev + next : prev), 0);
 
-    for (var k = 0; k < t12.length; k++) {
-      var res = this.formBuilder.group({
-        libraryType: new FormControl(t12[k]),
-        libraryName: new FormControl(t13[k]),
-        status: new FormControl(null, [])
-      });
+        return selectedCount >= 1 ? null : { notSelected: true };
+      }
+    };
 
-      this.lst233.push(res);
+    return validator;
+  }
+
+  addOtherSkillFormGroup666(t13): any {
+    if (t13[0].other != undefined) {
+      for (var k = 0; k < t13[0].other.length; k++) {
+        var res = this.formBuilder.group({
+          libraryType: new FormControl(t13[0].other[k].libraryType),
+          libraryName: new FormControl(t13[0].other[k].libraryName),
+          status: new FormControl(t13[0].other[k].status)
+        });
+
+        this.lst233.push(res);
+      }
     }
 
-
-   
     return this.lst233;
   }
 
@@ -204,6 +264,7 @@ export class EmployeeService {
   deleteEmployee(id: string) {
     // this.employeeList.remove($key);
     this.firestore.doc("filteredData/" + id).delete();
+    this.firestore.doc("employees/" + id).delete();
   }
   populateForm(data) {
     var libCode = data.libraryCode;
@@ -224,7 +285,7 @@ export class EmployeeService {
       other: [this.editArray]
     });
 
-    return resEdit1;
+    this.sendMessage1(resEdit1);
   }
 
   addOtherSkillFormGroup2(arry, libName, status): any {

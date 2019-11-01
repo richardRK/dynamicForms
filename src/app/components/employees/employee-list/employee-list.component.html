@@ -7,36 +7,42 @@
           Add Reference Heading
         </h3>
 
-        <!-- <mat-form-field class="search-form-field" floatLabel="never">
-          <input
-            matInput
-            [(ngModel)]="searchKey"
-            placeholder="Search"
-            autocomplete="off"
-            (keyup)="applyFilter()"
-          />
-
-          <button
-            mat-button
-            matSuffix
-            mat-icon-button
-            aria-label="Clear"
-            *ngIf="searchKey"
-            (click)="onSearchClear()"
-          >
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field> -->
         <div class="booking_content nomargin">
           <table style="width: 100%">
             <tbody>
               <tr>
+                <td>
+                  <mat-form-field class="search-form-field" floatLabel="never">
+                    <input
+                      matInput
+                      [(ngModel)]="searchKey"
+                      [ngModelOptions]="{ standalone: true }"
+                      placeholder="Search"
+                      autocomplete="off"
+                      (keyup)="applyFilter()"
+                    />
+
+                    <!-- <button
+                          mat-button
+                          matSuffix
+                          mat-icon-button
+                          aria-label="Clear"
+                          *ngIf="searchKey"
+                          (click)="onSearchClear()"
+                        >
+                          <mat-icon>close</mat-icon>
+                        </button> -->
+                  </mat-form-field>
+                </td>
                 <td>
                   <mat-form-field>
                     <input
                       formControlName="libraryCode"
                       matInput
                       placeholder="Library Code"
+                      [(ngModel)]="libraryCode"
+                      autocomplete="off"
+                      (keyup)="applyFilter()"
                     />
                   </mat-form-field>
                 </td>
@@ -47,6 +53,9 @@
                       formControlName="libraryName"
                       matInput
                       placeholder="Library Name"
+                      [(ngModel)]="libraryName"
+                      autocomplete="off"
+                      (keyup)="applyFilter()"
                     />
                   </mat-form-field>
                 </td>
@@ -235,8 +244,9 @@
   </mat-paginator>
 </div>
 
-<div *ngIf = "isLoaded">
-
-
-
+<div *ngIf="isLoaded">
+  <!-- <app-edit-page
+  *ngIf="editArray$ | async as editArray"
+  [editArray]="editArray">
+</app-edit-page> -->
 </div>

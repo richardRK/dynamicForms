@@ -42,21 +42,8 @@
                 <table style="width: 100%">
                   <tbody>
                     <tr></tr>
-                  </tbody>
-                </table>
-              </div>
 
-              <div id="rowCount1">
-                <table style="width: 100%">
-                  <tbody></tbody>
-                </table>
-              </div>
-            </div>
-            <br />
-            <div></div>
-          </div>
-
-          <div
+                    <div
             formArrayName="other"
             *ngFor="
               let other of service.form.get('other').controls;
@@ -120,6 +107,21 @@
               </div>
             </div>
           </div>
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="rowCount1">
+                <table style="width: 100%">
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <br />
+            <div></div>
+          </div>
+
+          
           <div class="button-row">
             <button
               mat-raised-button
@@ -129,7 +131,12 @@
             >
               Add Another GDS
             </button>
-            <button mat-raised-button color="primary" type="button" (click)="onSubmit()">
+            <button
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="onSubmit()"
+            >
               Submit
             </button>
             <button
